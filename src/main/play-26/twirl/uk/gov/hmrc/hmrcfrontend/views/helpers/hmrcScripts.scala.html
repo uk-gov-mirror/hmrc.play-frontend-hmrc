@@ -14,14 +14,12 @@
  * limitations under the License.
  *@
 
-@this()
+@import uk.gov.hmrc.hmrcfrontend.config.AssetsConfig
 
-@(params: PageHeading)
-@import params._
-<header class="hmrc-page-heading">
-  <h1 class="govuk-heading-xl">@text</h1>
-  @section match {
-    case Some(NonEmptyString(x)) => {<p class="govuk-caption-xl hmrc-caption-xl"><span class="govuk-visually-hidden">This section is </span>@x</p>}
-    case _ => {}
-  }
-</header>
+@this(AssetsConfig: AssetsConfig)
+
+@(scriptsBlock: Option[Html] = None)(implicit request: RequestHeader)
+<script src='@AssetsConfig.govukFrontendJsUrl'></script>
+<script src='@AssetsConfig.hmrcFrontendJsUrl'></script>
+<script src='@AssetsConfig.initAllJsUrl'></script>
+@scriptsBlock

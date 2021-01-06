@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 HM Revenue & Customs
+ * Copyright 2021 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,7 +17,7 @@
 package uk.gov.hmrc.hmrcfrontend.views.html
 
 import play.api.Play
-import uk.gov.hmrc.hmrcfrontend.config.{AccessibilityStatementConfig, ContactFrontendConfig, TrackingConsentConfig}
+import uk.gov.hmrc.hmrcfrontend.config.{AccessibilityStatementConfig, ContactFrontendConfig, TrackingConsentConfig, AssetsConfig}
 import uk.gov.hmrc.hmrcfrontend.views.config.{HmrcFooterItems => HmrcFooterItemsType}
 import uk.gov.hmrc.hmrcfrontend.views.html.components.{HmrcFooter, HmrcReportTechnicalIssue}
 
@@ -25,6 +25,7 @@ package object helpers {
   private lazy val AccessibilityStatementConfig = Play.current.injector.instanceOf[AccessibilityStatementConfig]
   lazy val ContactFrontendConfig                = Play.current.injector.instanceOf[ContactFrontendConfig]
   lazy val TrackingConsentConfig                = Play.current.injector.instanceOf[TrackingConsentConfig]
+  lazy val AssetsConfig                         = Play.current.injector.instanceOf[AssetsConfig]
 
   type HmrcFooterItems = HmrcFooterItemsType
   @deprecated(message = "Use DI", since = "Play 2.6")
@@ -42,4 +43,12 @@ package object helpers {
   @deprecated(message = "Use DI", since = "Play 2.6")
   lazy val HmrcReportTechnicalIssueHelper =
     new HmrcReportTechnicalIssueHelper(HmrcReportTechnicalIssue, ContactFrontendConfig)
+
+  type HmrcHead = hmrcHead
+  @deprecated(message = "Use DI", since = "Play 2.6")
+  lazy val HmrcHead = new hmrcHead(HmrcTrackingConsentSnippet, AssetsConfig)
+
+  type HmrcScripts = hmrcScripts
+  @deprecated(message = "Use DI", since = "Play 2.6")
+  lazy val HmrcScripts = new hmrcScripts(AssetsConfig)
 }

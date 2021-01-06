@@ -4,10 +4,10 @@ import play.sbt.PlayImport.ws
 import sbt.ModuleID
 
 object LibDependencies {
-  lazy val hmrcFrontendVersion = "1.23.0"
   private val playFrontendGovukVersion = "0.56.0"
+  val hmrcFrontendVersion = "1.23.1"
 
-  lazy val libDependencies: Seq[ModuleID] = dependencies(
+  def libDependencies: Seq[ModuleID] = dependencies(
     shared = {
       import PlayCrossCompilation.playRevision
 

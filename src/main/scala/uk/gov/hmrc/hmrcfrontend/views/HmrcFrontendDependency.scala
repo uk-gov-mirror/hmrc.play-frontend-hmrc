@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 HM Revenue & Customs
+ * Copyright 2021 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,16 +16,22 @@
 
 package uk.gov.hmrc.hmrcfrontend.views
 
-import buildinfo.BuildInfo
-
 import scala.util.matching.Regex
+import hmrcfrontendbuildinfo.{BuildInfo => HmrcFrontendBuildInfo}
+import buildinfo.{BuildInfo => GovukFrontendBuildInfo}
 
 object HmrcFrontendDependency {
-  val hmrcFrontendVersionRegex: Regex = """org\.webjars\.npm:hmrc-frontend:(\d+\.\d+\.\d+)""".r
+  val hmrcFrontendVersionRegex: Regex  = """org\.webjars\.npm:hmrc-frontend:(\d+\.\d+\.\d+)""".r
+  val govukFrontendVersionRegex: Regex = """org\.webjars\.npm:govuk-frontend:(\d+\.\d+\.\d+)""".r
 
   val hmrcFrontendVersion: String =
-    findFirstMatch(hmrcFrontendVersionRegex, BuildInfo.libraryDependencies)
+    findFirstMatch(hmrcFrontendVersionRegex, HmrcFrontendBuildInfo.libraryDependencies)
       .getOrElse(throw new RuntimeException("Unable to find the hmrc-frontend dependency"))
+      .group(1)
+
+  val govukFrontendVersion: String =
+    findFirstMatch(govukFrontendVersionRegex, GovukFrontendBuildInfo.libraryDependencies)
+      .getOrElse(throw new RuntimeException("Unable to find the govuk-frontend dependency"))
       .group(1)
 
   def findFirstMatch(regex: Regex, xs: Seq[String]): Option[Regex.Match] =

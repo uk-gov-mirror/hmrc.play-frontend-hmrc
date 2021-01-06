@@ -13,7 +13,7 @@ lazy val playDir =
 lazy val IntegrationTest = config("it") extend Test
 
 lazy val root = Project(libName, file("."))
-  .enablePlugins(PlayScala, SbtAutoBuildPlugin, SbtGitVersioning, SbtTwirl, SbtArtifactory, BuildInfoPlugin)
+  .enablePlugins(PlayScala, SbtAutoBuildPlugin, SbtGitVersioning, SbtTwirl, BuildInfoPlugin)
   .disablePlugins(PlayLayoutPlugin)
   .configs(IntegrationTest)
   .settings(
@@ -21,6 +21,7 @@ lazy val root = Project(libName, file("."))
     majorVersion := 0,
     scalaVersion := "2.12.10",
     crossScalaVersions := List("2.11.12", "2.12.10"),
+    buildInfoPackage := "hmrcfrontendbuildinfo",
     libraryDependencies ++= LibDependencies.libDependencies,
     dependencyOverrides ++= LibDependencies.overrides,
     resolvers :=
