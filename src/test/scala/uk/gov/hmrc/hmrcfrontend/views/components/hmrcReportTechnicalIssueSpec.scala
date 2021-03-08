@@ -16,14 +16,18 @@
 
 package uk.gov.hmrc.hmrcfrontend.views.components
 
+import org.jsoup.Jsoup
+import play.api.i18n.Lang
+import play.test.Helpers.contentAsString
 import play.twirl.api.HtmlFormat
+import uk.gov.hmrc.hmrcfrontend.MessagesSupport
 import uk.gov.hmrc.hmrcfrontend.views.TemplateUnitSpec
 import uk.gov.hmrc.hmrcfrontend.views.html.components._
 import uk.gov.hmrc.hmrcfrontend.views.viewmodels.reporttechnicalissue.ReportTechnicalIssue
 
 import scala.util.Try
 
-class hmrcReportTechnicalIssueSpec extends TemplateUnitSpec[ReportTechnicalIssue]("hmrcReportTechnicalIssue") {
+class hmrcReportTechnicalIssueSpec extends TemplateUnitSpec[ReportTechnicalIssue]("hmrcReportTechnicalIssue") with MessagesSupport {
 
   /**
    * Calls the Twirl template with the given parameters and returns the resulting markup
@@ -31,6 +35,19 @@ class hmrcReportTechnicalIssueSpec extends TemplateUnitSpec[ReportTechnicalIssue
    * @param templateParams
    * @return [[Try[HtmlFormat.Appendable]]] containing the markup
    */
-  override def render(templateParams: ReportTechnicalIssue): Try[HtmlFormat.Appendable] =
+  override def render(templateParams: ReportTechnicalIssue): Try[HtmlFormat.Appendable] = {
     Try(HmrcReportTechnicalIssue(templateParams))
+  }
+
+  "hmrcReportTechnicalIssue" should {
+    "Render in Welsh given implicit Welsh messages" in {
+       implicit val messages = messagesApi.preferred(Seq(Lang("cy")))
+
+       val content  = contentAsString(HmrcReportTechnicalIssue(ReportTechnicalIssue())(messages))
+       val document = Jsoup.parse(content)
+       val links    = document.select("a")
+
+       links.first.text should include regex "A yw’r dudalen hon yn gweithio’n iawn?"
+    }
+  }
 }

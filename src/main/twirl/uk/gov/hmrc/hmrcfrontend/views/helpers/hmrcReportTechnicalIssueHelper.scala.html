@@ -24,7 +24,6 @@
 @contactFrontendConfig.serviceId.map { serviceId =>
     @hmrcReportTechnicalIssue(ReportTechnicalIssue(
         serviceId = serviceId,
-        language = if(messages.lang.code == "cy") Cy else En,
         referrerUrl = contactFrontendConfig.referrerUrl,
         baseUrl = contactFrontendConfig.baseUrl
     ))
